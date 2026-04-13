@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creator Winner Finder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <p class="eyebrow">Echo Black Tools</p>
+      <h1>Creator Winner Finder</h1>
+      <p class="subtext">
+        Paste a YouTube channel, video link, handle, or creator name.
+        This tool scores visible signals and gives a rough verdict.
+      </p>
+    </header>
 
+    <main class="card">
+      <label for="creatorInput">Creator or link</label>
+      <input
+        id="creatorInput"
+        type="text"
+        placeholder="Example: https://youtube.com/@creatorname"
+      />
+
+      <button id="analyzeBtn">Analyze Creator</button>
+
+      <section id="result" class="result hidden">
+        <div class="score-wrap">
+          <div class="score-circle">
+            <span id="scoreValue">0</span>
+          </div>
+          <div>
+            <p class="label">Verdict</p>
+            <h2 id="verdictText">Waiting</h2>
+            <p id="verdictReason" class="muted">
+              Enter a creator or link to begin.
+            </p>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span class="metric-label">Consistency</span>
+            <strong id="consistencyValue">0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Hype Risk</span>
+            <strong id="hypeValue">0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Study Worthiness</span>
+            <strong id="studyValue">0</strong>
+          </div>
+        </div>
+
+        <div class="notes">
+          <h3>Why this score</h3>
+          <ul id="notesList"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
