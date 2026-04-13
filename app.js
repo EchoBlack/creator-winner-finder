@@ -24,6 +24,37 @@ function simpleHash(str) {
 }
 
 function cleanYoutubeInput(input) {
+  function extractYouTubeDetails(parsed) {
+  const value = parsed.cleaned;
+  const type = parsed.type;
+
+  let details = {
+    type,
+    handle: null,
+    videoId: null,
+    channelId: null
+  };
+
+  if (type === "Handle") {
+    details.handle = value.replace("@", "");
+  }
+
+  if (type === "Video URL") {
+    const match = value.match(/v=([^&]+)/) || value.match(/youtu\.be\/([^?]+)/);
+    if (match) {
+      details.videoId = match[1];
+    }
+  }
+
+  if (type === "Channel URL") {
+    const parts = value.split("channel/");
+    if (parts[1]) {
+      details.channelId = parts[1];
+    }
+  }
+
+  return details;
+}
   const raw = input.trim();
 
   if (!raw) {
@@ -189,10 +220,19 @@ analyzeBtn.addEventListener("click", () => {
   }
 
   const parsed = cleanYoutubeInput(input);
-  const analysis = getMockAnalysis(parsed.cleaned, parsed.type);
+  const ytDetails = extractYouTubeDetails(parsed);
+const analysis = getMockAnalysis(parsed.cleaned, parsed.type);
 
   detectedType.textContent = parsed.type;
   cleanedInput.textContent = parsed.cleaned || "None";
+
+let extra = "";
+
+if (ytDetails.handle) extra += ` | Handle: ${ytDetails.handle}`;
+if (ytDetails.videoId) extra += ` | Video ID: ${ytDetails.videoId}`;
+if (ytDetails.channelId) extra += ` | Channel ID: ${ytDetails.channelId}`;
+
+cleanedInput.textContent += extra;
   inputSummary.classList.remove("hidden");
 
   scoreValue.textContent = analysis.finalScore;
